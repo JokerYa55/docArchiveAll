@@ -20,6 +20,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import org.apache.log4j.Logger;
 import org.apache.log4j.Priority;
+import org.json.JSONArray;
 import rtk.docarchive.dao.beans.TProject;
 
 /**
@@ -64,19 +65,23 @@ public class apiREST {
 
     @Path("/project")
     @GET
-    @Produces(MediaType.APPLICATION_XML)
+    @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("doc-archive-user")
     public Response getProject() {
+        log.info("getProject");
         List<TProject> res = null;
         try {
             getEM();
             em.getTransaction().begin();
-            res = em.createQuery("from TProject u").getResultList();
+            res = em.createNamedQuery("TProject.findAll").getResultList();
             log.info(String.format("res = %s", res));
             em.getTransaction().commit();
         } catch (Exception e) {
             log.log(Priority.ERROR, e);
         }
+
+        //JSONArray a = new JSONArray(res);
+        
         return Response.status(Response.Status.OK).entity(res).build();
     }
 

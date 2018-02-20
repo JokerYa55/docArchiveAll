@@ -14,6 +14,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -25,6 +27,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(name = "t_project")
 @XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "TProject.findAll", query = "SELECT t FROM TProject t ")})
 public class TProject implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -44,13 +48,13 @@ public class TProject implements Serializable {
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date end_date;
     //@Column(nullable = false)
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private TBranch branch;
     //@Column(nullable = false)
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private TProduct product;
     //@Column(nullable = false)
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private TProjectType project_type;
 
     public Long getId() {
