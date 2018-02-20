@@ -28,7 +28,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "t_project")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "TProject.findAll", query = "SELECT t FROM TProject t ")})
+    @NamedQuery(name = "TProject.findAll", query = "SELECT t FROM TProject t ")
+    , @NamedQuery(name = "TProject.findById", query = "SELECT t FROM TProject t WHERE t.id = :id")})
 public class TProject implements Serializable {
 
     private static final long serialVersionUID = 1L;
