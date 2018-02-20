@@ -9,6 +9,7 @@ import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.ws.rs.GET;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
@@ -40,12 +41,12 @@ public class apiREST {
         return "test";
     }
     
-//    @Path("/addProject")
-//    @GET
-//    @Produces(MediaType.APPLICATION_JSON)
-//    @RolesAllowed("doc-archive-user")    
-//    public Response addProject(TProject project) {
-//        return Response.ok().build();
-//    }
+    @Path("/addProject")
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed("doc-archive-user")    
+    public Response addProject(TProject project) {
+        return Response.status(Response.Status.CREATED).build();
+    }
     
 }
