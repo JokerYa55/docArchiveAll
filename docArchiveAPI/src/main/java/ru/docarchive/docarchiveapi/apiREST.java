@@ -10,6 +10,9 @@ import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import org.apache.log4j.Logger;
 import rtk.docarchive.dao.beans.TProject;
 
@@ -37,11 +40,12 @@ public class apiREST {
         return "test";
     }
     
-    @Path("/addProject")
-    @GET
-    @RolesAllowed("doc-archive-user")
-    public String addProject(TProject project) {
-        return "addProject";
-    }
+//    @Path("/addProject")
+//    @GET
+//    @Produces(MediaType.APPLICATION_JSON)
+//    @RolesAllowed("doc-archive-user")    
+//    public Response addProject(TProject project) {
+//        return Response.ok().build();
+//    }
     
 }
