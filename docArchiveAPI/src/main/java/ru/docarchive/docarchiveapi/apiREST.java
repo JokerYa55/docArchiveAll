@@ -11,7 +11,6 @@ import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.NamedQuery;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.ws.rs.GET;
@@ -58,6 +57,11 @@ public class apiREST {
         return "test";
     }
 
+    /**
+     *
+     * @param item
+     * @return
+     */
     @Path("/project")
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
@@ -72,6 +76,10 @@ public class apiREST {
         return Response.status(Response.Status.CREATED).build();
     }
 
+    /**
+     *
+     * @return
+     */
     @Path("/project")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -97,6 +105,11 @@ public class apiREST {
         }
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     @Path("/project/{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -123,6 +136,11 @@ public class apiREST {
         }
     }
 
+    /**
+     *
+     * @param item
+     * @return
+     */
     @Path("/branch")
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
@@ -133,10 +151,12 @@ public class apiREST {
             getEM();
             em.getTransaction().begin();
             em.merge(item);
-            if (em.getTransaction().isActive()) {
-                em.getTransaction().commit();
-                em.flush();
+            log.info("commit");
+            if (em.getTransaction().isActive()) {                
+                em.getTransaction().commit();                
             }
+            //log.info("flush");
+            //em.flush();
             em.close();
         } catch (Exception e) {
             log.log(Priority.ERROR, e);
@@ -144,6 +164,10 @@ public class apiREST {
         return Response.status(Response.Status.CREATED).build();
     }
 
+    /**
+     *
+     * @return
+     */
     @Path("/branch")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -171,7 +195,7 @@ public class apiREST {
 
     @Path("/branch/{id}")
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)    
     @RolesAllowed("doc-archive-user")
     public Response getBranchById(@PathParam("id") String id) {
         log.info("getBranchById id => " + id);
