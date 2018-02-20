@@ -11,16 +11,18 @@ import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NamedQuery;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import org.apache.log4j.Logger;
 import org.apache.log4j.Priority;
-import org.json.JSONArray;
 import rtk.docarchive.dao.beans.TProject;
 
 /**
@@ -65,7 +67,7 @@ public class apiREST {
 
     @Path("/project")
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_XML)
     @RolesAllowed("doc-archive-user")
     public Response getProject() {
         log.info("getProject");
@@ -76,13 +78,42 @@ public class apiREST {
             res = em.createNamedQuery("TProject.findAll").getResultList();
             log.info(String.format("res = %s", res));
             em.getTransaction().commit();
+            em.close();
         } catch (Exception e) {
             log.log(Priority.ERROR, e);
         }
 
-        //JSONArray a = new JSONArray(res);
-        
-        return Response.status(Response.Status.OK).entity(res).build();
+        if (res != null) {
+            return Response.status(Response.Status.OK).entity(res).build();
+        } else {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+    }
+
+    @Path("/project/{id}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed("doc-archive-user")
+    public Response getProjectById(@PathParam("id") String id) {
+        log.info("getProjectById id => " + id);
+        TProject res = null;
+        try {
+            getEM();
+            em.getTransaction().begin();
+            Query q = em.createNamedQuery("TProject.findById");
+            q.setParameter("id", new Long(id));
+            res = (TProject) q.getSingleResult();
+            log.info(String.format("res = %s", res));
+            em.getTransaction().commit();
+            em.close();
+        } catch (Exception e) {
+            log.log(Priority.ERROR, e);
+        }
+        if (res != null) {
+            return Response.status(Response.Status.OK).entity(res).build();
+        } else {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
     }
 
 }
