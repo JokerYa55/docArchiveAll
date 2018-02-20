@@ -23,6 +23,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import org.apache.log4j.Logger;
 import org.apache.log4j.Priority;
+import rtk.docarchive.dao.beans.TBranch;
 import rtk.docarchive.dao.beans.TProject;
 
 /**
@@ -61,13 +62,19 @@ public class apiREST {
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("doc-archive-user")
-    public Response addProject(TProject project) {
+    public Response addProject(TProject item) {
+        try {
+            getEM();
+            em.merge(item);
+        } catch (Exception e) {
+            log.log(Priority.ERROR, e);
+        }
         return Response.status(Response.Status.CREATED).build();
     }
 
     @Path("/project")
     @GET
-    @Produces(MediaType.APPLICATION_XML)
+    @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("doc-archive-user")
     public Response getProject() {
         log.info("getProject");
@@ -116,4 +123,75 @@ public class apiREST {
         }
     }
 
+    @Path("/branch")
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed("doc-archive-user")
+    public Response addBranch(TBranch item) {
+        log.info("addBranch => " + item);
+        try {
+            getEM();
+            em.getTransaction().begin();
+            em.merge(item);
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().commit();
+                em.flush();
+            }
+            em.close();
+        } catch (Exception e) {
+            log.log(Priority.ERROR, e);
+        }
+        return Response.status(Response.Status.CREATED).build();
+    }
+
+    @Path("/branch")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed("doc-archive-user")
+    public Response getBranch() {
+        log.info("getBranch");
+        List<TBranch> res = null;
+        try {
+            getEM();
+            em.getTransaction().begin();
+            res = em.createNamedQuery("TBranch.findAll").getResultList();
+            log.info(String.format("res = %s", res));
+            em.getTransaction().commit();
+            em.close();
+        } catch (Exception e) {
+            log.log(Priority.ERROR, e);
+        }
+
+        if (res != null) {
+            return Response.status(Response.Status.OK).entity(res).build();
+        } else {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+    }
+
+    @Path("/branch/{id}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed("doc-archive-user")
+    public Response getBranchById(@PathParam("id") String id) {
+        log.info("getBranchById id => " + id);
+        TBranch res = null;
+        try {
+            getEM();
+            em.getTransaction().begin();
+            Query q = em.createNamedQuery("TBranch.findById");
+            q.setParameter("id", new Long(id));
+            res = (TBranch) q.getSingleResult();
+            log.info(String.format("res = %s", res));
+            em.getTransaction().commit();
+            em.close();
+        } catch (Exception e) {
+            log.log(Priority.ERROR, e);
+        }
+        if (res != null) {
+            return Response.status(Response.Status.OK).entity(res).build();
+        } else {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+    }
 }
