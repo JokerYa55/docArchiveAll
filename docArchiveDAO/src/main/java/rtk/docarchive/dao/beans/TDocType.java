@@ -11,7 +11,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
@@ -19,6 +22,10 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "t_doc_type")
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "TDocType.findAll", query = "SELECT t FROM TDocType t ")
+    , @NamedQuery(name = "TDocType.findById", query = "SELECT t FROM TDocType t WHERE t.id = :id")})
 public class TDocType implements Serializable {
 
     private static final long serialVersionUID = 1L;
