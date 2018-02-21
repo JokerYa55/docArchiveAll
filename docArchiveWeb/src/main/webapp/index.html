@@ -17,7 +17,7 @@
                     },
                     url: "http://192.168.0.20:8080/docArchiveAPI/api/project",
                     success: function (data, textStatus, jqXHR) {
-                        console.log("data => ");
+                        console.log(jqXHR);
                         console.log(data);
                         for (var i = 0; i < data.length; i++) {
                             console.log(data[i].name_doc);
@@ -39,7 +39,7 @@
                     },
                     url: "http://192.168.0.20:8080/docArchiveAPI/api/branch",
                     success: function (data, textStatus, jqXHR) {
-                        console.log("data => ");
+                        console.log(jqXHR);
                         console.log(data);
                         for (var i = 0; i < data.length; i++) {
                             console.log(data[i].name_doc);
