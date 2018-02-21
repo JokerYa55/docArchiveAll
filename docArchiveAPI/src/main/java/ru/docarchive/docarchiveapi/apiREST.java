@@ -29,6 +29,7 @@ import rtk.docarchive.dao.beans.TDocType;
 import rtk.docarchive.dao.beans.TProduct;
 import rtk.docarchive.dao.beans.TProject;
 import rtk.docarchive.dao.beans.TProjectDoc;
+import rtk.docarchive.dao.beans.TProjectType;
 
 /**
  *
@@ -72,7 +73,8 @@ public class apiREST {
     //TODO : Функции для работы с проектами
     /**
      * Добавить проект
-     * @param item 
+     *
+     * @param item
      * @return - объект типа Response
      */
     @Path("/project")
@@ -832,7 +834,7 @@ public class apiREST {
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("doc-archive-user")
     public Response getProjectDocById(@PathParam("id") Long id) {
-        log.info(String.format("getProjectDocById id => %s",id));
+        log.info(String.format("getProjectDocById id => %s", id));
         TProjectDoc res = null;
         try {
             getEM();
@@ -852,4 +854,163 @@ public class apiREST {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
     }
+
+    //TODO : Функции для работы с типами проектов (t_project_type)
+    /**
+     * Добавить тип проекта
+     *
+     * @param item - тип проекта
+     * @return - объект Response
+     */
+    @Path("/projecttype")
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed("doc-archive-user")
+    public Response addProjectType(TProjectType item) {
+        log.info("addProjectType => " + item);
+        try {
+            getEM();
+            em.getTransaction().begin();
+            em.merge(item);
+            log.info("commit");
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().commit();
+            }
+            em.close();
+        } catch (Exception e) {
+            log.log(Priority.ERROR, e);
+        }
+        return Response.status(Response.Status.CREATED).build();
+    }
+
+    /**
+     * Удаление типа проекта
+     *
+     * @param id
+     * @return
+     */
+    @Path("/projecttype/{id}")
+    @DELETE
+    @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed("doc-archive-user")
+    public Response deleteProjectType(@PathParam("id") Long id) {
+        try {
+            log.info(String.format("deleteProjectType => %s", id.toString()));
+            getEM();
+            TProjectType item = em.find(TProjectType.class, id);
+            if (item != null) {
+                try {
+                    em.getTransaction().begin();
+                    em.remove(item);
+                    if (em.getTransaction().isActive()) {
+                        em.getTransaction().commit();
+                    }
+                    em.close();
+                    return Response.status(Response.Status.OK).build();
+                } catch (Exception e1) {
+                    em.close();
+                    return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(String.format("delete project_type id = %s error => %s", id, e1.getMessage())).build();
+                }
+            } else {
+                em.close();
+                return Response.status(Response.Status.NOT_FOUND).build();
+            }
+        } catch (Exception e) {
+            log.log(Priority.ERROR, e);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    /**
+     * Обновить тип проекта
+     *
+     * @param id
+     * @param item
+     * @return
+     */
+    @Path("/projecttype/{id}")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed("doc-archive-user")
+    public Response updateProjectType(@PathParam("id") Long id, TProjectType item) {
+        log.info(String.format("updateProjectType => %s", id.toString()));
+        try {
+            getEM();
+            em.getTransaction().begin();
+            item.setId(id);
+            em.merge(item);
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().commit();
+            }
+            em.close();
+
+        } catch (Exception e) {
+            log.log(Priority.ERROR, e);
+        }
+        return Response.status(Response.Status.OK).build();
+    }
+
+    /**
+     * Получить список документов по проекту
+     *
+     * @param project_id
+     * @return
+     */
+    @Path("/projecttype")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed("doc-archive-user")
+    public Response getProjectTypeList() {
+        log.info(String.format("getProjectTypeList"));
+        List<TProjectType> res = null;
+        try {
+            getEM();
+            em.getTransaction().begin();
+            res = em.createNamedQuery("TProjectType.findAll").getResultList();
+            log.info(String.format("res = %s", res));
+            em.getTransaction().commit();
+            em.close();
+        } catch (Exception e) {
+            log.log(Priority.ERROR, e);
+        }
+
+        if (res != null) {
+            return Response.status(Response.Status.OK).entity(res).build();
+        } else {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+    }
+
+    /**
+     * Получить информацию по типу документа с id = {id}
+     *
+     * @param id
+     * @return
+     */
+    @Path("/projecttype/{id}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed("doc-archive-user")
+    public Response getProjectTypeById(@PathParam("id") Long id) {
+        log.info(String.format("getProjectTypeById id => %s", id));
+        TProjectType res = null;
+        try {
+            getEM();
+            em.getTransaction().begin();
+            Query q = em.createNamedQuery("TProjectType.findById");
+            q.setParameter("id", id);
+            res = (TProjectType) q.getSingleResult();
+            log.info(String.format("res = %s", res));
+            em.getTransaction().commit();
+            em.close();
+        } catch (Exception e) {
+            log.log(Priority.ERROR, e);
+        }
+        if (res != null) {
+            return Response.status(Response.Status.OK).entity(res).build();
+        } else {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+    }
+
 }

@@ -55,6 +55,13 @@ public class index extends HttpServlet {
     private UserTransaction userTransaction;
     private Logger log = Logger.getLogger(getClass().getName());
 
+    /**
+     *
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         RequestDispatcher dispatcher = request.getRequestDispatcher("/upload_main.jsp");

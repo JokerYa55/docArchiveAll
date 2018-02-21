@@ -35,10 +35,18 @@ public class TBranch implements Serializable {
     @Column(length = 30, nullable = false, unique = true)
     private String name_branch;
 
+    /**
+     *
+     * @return
+     */
     public Long getId() {
         return id;
     }
 
+    /**
+     *
+     * @param id
+     */
     public void setId(Long id) {
         this.id = id;
     }
@@ -68,10 +76,18 @@ public class TBranch implements Serializable {
         return "rtk.beans.t_branch[ id=" + id + " ]";
     }
 
+    /**
+     *
+     * @return
+     */
     public String getName_branch() {
         return name_branch;
     }
 
+    /**
+     *
+     * @param name_branch
+     */
     public void setName_branch(String name_branch) {
         this.name_branch = name_branch;
     }

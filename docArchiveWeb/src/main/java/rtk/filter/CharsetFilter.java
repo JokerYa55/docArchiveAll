@@ -17,6 +17,11 @@ public class CharsetFilter implements Filter {
 
     private String encoding;
 
+    /**
+     *
+     * @param config
+     * @throws ServletException
+     */
     public void init(FilterConfig config) throws ServletException {
         // читаем из конфигурации
         encoding = config.getInitParameter("requestEncoding");
@@ -27,6 +32,14 @@ public class CharsetFilter implements Filter {
         }
     }
 
+    /**
+     *
+     * @param request
+     * @param response
+     * @param next
+     * @throws IOException
+     * @throws ServletException
+     */
     public void doFilter(ServletRequest request,
             ServletResponse response, FilterChain next)
             throws IOException, ServletException {
@@ -34,6 +47,9 @@ public class CharsetFilter implements Filter {
         next.doFilter(request, response);
     }
 
+    /**
+     *
+     */
     public void destroy() {
     }
 }

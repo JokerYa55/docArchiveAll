@@ -35,18 +35,34 @@ public class TDocType implements Serializable {
     @Column(length = 30, unique = true, nullable = false)
     private String name_type;
 
+    /**
+     *
+     * @return
+     */
     public Long getId() {
         return id;
     }
 
+    /**
+     *
+     * @param id
+     */
     public void setId(Long id) {
         this.id = id;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getName_type() {
         return name_type;
     }
 
+    /**
+     *
+     * @param name_type
+     */
     public void setName_type(String name_type) {
         this.name_type = name_type;
     }

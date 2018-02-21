@@ -58,10 +58,18 @@ public class TProject implements Serializable {
     @ManyToOne(fetch = FetchType.EAGER)
     private TProjectType project_type;
 
+    /**
+     *
+     * @return
+     */
     public Long getId() {
         return id;
     }
 
+    /**
+     *
+     * @param id
+     */
     public void setId(Long id) {
         this.id = id;
     }
@@ -91,66 +99,130 @@ public class TProject implements Serializable {
         return "rtk.beans.t_project[ id=" + id + " ]";
     }
 
+    /**
+     *
+     * @return
+     */
     public String getName_doc() {
         return name_doc;
     }
 
+    /**
+     *
+     * @param name_doc
+     */
     public void setName_doc(String name_doc) {
         this.name_doc = name_doc;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getNum_doc() {
         return num_doc;
     }
 
+    /**
+     *
+     * @param num_doc
+     */
     public void setNum_doc(String num_doc) {
         this.num_doc = num_doc;
     }
 
+    /**
+     *
+     * @return
+     */
     public Date getDate_doc() {
         return date_doc;
     }
 
+    /**
+     *
+     * @param date_doc
+     */
     public void setDate_doc(Date date_doc) {
         this.date_doc = date_doc;
     }
 
+    /**
+     *
+     * @return
+     */
     public Date getBegin_date() {
         return begin_date;
     }
 
+    /**
+     *
+     * @param begin_date
+     */
     public void setBegin_date(Date begin_date) {
         this.begin_date = begin_date;
     }
 
+    /**
+     *
+     * @return
+     */
     public Date getEnd_date() {
         return end_date;
     }
 
+    /**
+     *
+     * @param end_date
+     */
     public void setEnd_date(Date end_date) {
         this.end_date = end_date;
     }
 
+    /**
+     *
+     * @return
+     */
     public TBranch getBranch() {
         return branch;
     }
 
+    /**
+     *
+     * @param branch
+     */
     public void setBranch(TBranch branch) {
         this.branch = branch;
     }
 
+    /**
+     *
+     * @return
+     */
     public TProduct getProduct() {
         return product;
     }
 
+    /**
+     *
+     * @param product
+     */
     public void setProduct(TProduct product) {
         this.product = product;
     }
 
+    /**
+     *
+     * @return
+     */
     public TProjectType getProject_type() {
         return project_type;
     }
 
+    /**
+     *
+     * @param project_type
+     */
     public void setProject_type(TProjectType project_type) {
         this.project_type = project_type;
     }

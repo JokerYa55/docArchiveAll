@@ -35,10 +35,18 @@ public class TProduct implements Serializable {
     @Column(length = 30, nullable = false, unique = true)
     private String name_product;
 
+    /**
+     *
+     * @return
+     */
     public Long getId() {
         return id;
     }
 
+    /**
+     *
+     * @param id
+     */
     public void setId(Long id) {
         this.id = id;
     }
@@ -68,10 +76,18 @@ public class TProduct implements Serializable {
         return "rtk.beans.TProduct[ id=" + id + " ]";
     }
 
+    /**
+     *
+     * @return
+     */
     public String getName_product() {
         return name_product;
     }
 
+    /**
+     *
+     * @param name_product
+     */
     public void setName_product(String name_product) {
         this.name_product = name_product;
     }

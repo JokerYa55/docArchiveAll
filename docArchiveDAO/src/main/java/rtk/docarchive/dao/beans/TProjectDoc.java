@@ -47,10 +47,18 @@ public class TProjectDoc implements Serializable {
     @ManyToOne
     private TDocType doc_type;
 
+    /**
+     *
+     * @return
+     */
     public Long getId() {
         return id;
     }
 
+    /**
+     *
+     * @param id
+     */
     public void setId(Long id) {
         this.id = id;
     }
@@ -80,42 +88,82 @@ public class TProjectDoc implements Serializable {
         return "rtk.beans.TProjectDoc[ id=" + id + " ]";
     }
 
+    /**
+     *
+     * @return
+     */
     public String getFile_name() {
         return file_name;
     }
 
+    /**
+     *
+     * @param file_name
+     */
     public void setFile_name(String file_name) {
         this.file_name = file_name;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getReal_file_name() {
         return real_file_name;
     }
 
+    /**
+     *
+     * @param real_file_name
+     */
     public void setReal_file_name(String real_file_name) {
         this.real_file_name = real_file_name;
     }
 
+    /**
+     *
+     * @return
+     */
     public TProject getProject() {
         return project;
     }
 
+    /**
+     *
+     * @param project
+     */
     public void setProject(TProject project) {
         this.project = project;
     }
 
+    /**
+     *
+     * @return
+     */
     public Date getDate_load() {
         return date_load;
     }
 
+    /**
+     *
+     * @param date_load
+     */
     public void setDate_load(Date date_load) {
         this.date_load = date_load;
     }
 
+    /**
+     *
+     * @return
+     */
     public TDocType getDoc_type() {
         return doc_type;
     }
 
+    /**
+     *
+     * @param doc_type
+     */
     public void setDoc_type(TDocType doc_type) {
         this.doc_type = doc_type;
     }
