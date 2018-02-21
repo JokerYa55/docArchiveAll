@@ -26,6 +26,7 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.Priority;
 import rtk.docarchive.dao.beans.TBranch;
 import rtk.docarchive.dao.beans.TDocType;
+import rtk.docarchive.dao.beans.TProduct;
 import rtk.docarchive.dao.beans.TProject;
 
 /**
@@ -369,7 +370,7 @@ public class apiREST {
         }
     }
     
-    //TODO : Функции для работы с Ттипами документов (t_doc_type)
+    //TODO : Функции для работы с типами документов (t_doc_type)
     
     /**
      * Добавить тип документа
@@ -472,7 +473,7 @@ public class apiREST {
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("doc-archive-user")
     public Response getDocType() {
-        log.info("getBranch");
+        log.info("getDocType");
         List<TDocType> res = null;
         try {
             getEM();
@@ -503,13 +504,13 @@ public class apiREST {
     @RolesAllowed("doc-archive-user")
     public Response getDocTypeById(@PathParam("id") Long id) {
         log.info("getDocTypeById id => " + id);
-        TBranch res = null;
+        TDocType res = null;
         try {
             getEM();
             em.getTransaction().begin();
             Query q = em.createNamedQuery("TDocType.findById");
             q.setParameter("id", id);
-            res = (TBranch) q.getSingleResult();
+            res = (TDocType) q.getSingleResult();
             log.info(String.format("res = %s", res));
             em.getTransaction().commit();
             em.close();
@@ -523,5 +524,158 @@ public class apiREST {
         }
     }
     
+    //TODO : Функции для работы с продуктами (t_product)
+    
+    /**
+     * Добавить продукт
+     * @param item
+     * @return
+     */
+    @Path("/product")
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed("doc-archive-user")
+    public Response addProduct(TProduct item) {
+        log.info("addProduct => " + item);
+        try {
+            getEM();
+            em.getTransaction().begin();
+            em.merge(item);
+            log.info("commit");
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().commit();
+            }            
+            em.close();
+        } catch (Exception e) {
+            log.log(Priority.ERROR, e);
+        }
+        return Response.status(Response.Status.CREATED).build();
+    }
+
+     /**
+     * Удаление продукта
+     *
+     * @param id
+     * @return
+     */
+    @Path("/product/{id}")
+    @DELETE
+    @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed("doc-archive-user")
+    public Response deleteProвгсе(@PathParam("id") Long id) {
+        try {
+            log.info(String.format("deleteProduct => %s", id.toString()));
+            getEM();
+            TProduct item = em.find(TProduct.class, id);
+            if (item != null) {
+                try {
+                    em.getTransaction().begin();
+                    em.remove(item);
+                    if (em.getTransaction().isActive()) {
+                        em.getTransaction().commit();
+                    }
+                    em.close();
+                    return Response.status(Response.Status.OK).build();
+                } catch (Exception e1) {
+                    em.close();
+                    return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(String.format("delete product id = %s error => %s", id, e1.getMessage())).build();
+                }
+            } else {
+                em.close();
+                return Response.status(Response.Status.NOT_FOUND).build();
+            }
+        } catch (Exception e) {
+            log.log(Priority.ERROR, e);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    /**
+     * Обновить тип документа
+     * @param id
+     * @param item
+     * @return
+     */
+    @Path("/product/{id}")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed("doc-archive-user")
+    public Response updateProduct(@PathParam("id") Long id, TProduct item) {
+        log.info(String.format("updateProduct => %s", id.toString()));
+        try {
+            getEM();
+            em.getTransaction().begin();
+            item.setId(id);
+            em.merge(item);
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().commit();
+            }
+            em.close();
+
+        } catch (Exception e) {
+            log.log(Priority.ERROR, e);
+        }
+        return Response.status(Response.Status.CREATED).build();
+    }
+    
+    /**
+     * Получить список продуктов
+     * @return
+     */
+    @Path("/product")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed("doc-archive-user")
+    public Response getProductList() {
+        log.info("getProductList");
+        List<TProduct> res = null;
+        try {
+            getEM();
+            em.getTransaction().begin();
+            res = em.createNamedQuery("TProduct.findAll").getResultList();
+            log.info(String.format("res = %s", res));
+            em.getTransaction().commit();
+            em.close();
+        } catch (Exception e) {
+            log.log(Priority.ERROR, e);
+        }
+
+        if (res != null) {
+            return Response.status(Response.Status.OK).entity(res).build();
+        } else {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+    }
+
+    /**
+     * Получить информацию по типу документа с id = {id}
+     * @param id
+     * @return
+     */
+    @Path("/product/{id}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed("doc-archive-user")
+    public Response getProductById(@PathParam("id") Long id) {
+        log.info("getProductById id => " + id);
+        TProduct res = null;
+        try {
+            getEM();
+            em.getTransaction().begin();
+            Query q = em.createNamedQuery("TProduct.findById");
+            q.setParameter("id", id);
+            res = (TProduct) q.getSingleResult();
+            log.info(String.format("res = %s", res));
+            em.getTransaction().commit();
+            em.close();
+        } catch (Exception e) {
+            log.log(Priority.ERROR, e);
+        }
+        if (res != null) {
+            return Response.status(Response.Status.OK).entity(res).build();
+        } else {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+    }
     
 }
