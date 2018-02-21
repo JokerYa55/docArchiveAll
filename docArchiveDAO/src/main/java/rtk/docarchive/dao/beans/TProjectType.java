@@ -75,5 +75,13 @@ public class TProjectType implements Serializable {
     public String toString() {
         return "rtk.beans.TProjectType[ id=" + id + " ]";
     }
+
+    public String getName_project_type() {
+        return name_project_type;
+    }
+
+    public void setName_project_type(String name_project_type) {
+        this.name_project_type = name_project_type;
+    }
     
 }
