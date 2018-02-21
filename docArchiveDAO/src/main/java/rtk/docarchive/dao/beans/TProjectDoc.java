@@ -13,8 +13,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
@@ -22,6 +25,10 @@ import javax.persistence.Temporal;
  */
 @Entity
 @Table(name = "t_project_doc")
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "TProjectDoc.findAll", query = "SELECT t FROM TProjectDoc t where t.project.id = :project_id")
+    , @NamedQuery(name = "TProjectDoc.findById", query = "SELECT t FROM TProjectDoc t WHERE t.id = :id")})
 public class TProjectDoc implements Serializable {
 
     private static final long serialVersionUID = 1L;

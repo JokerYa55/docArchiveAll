@@ -28,6 +28,7 @@ import rtk.docarchive.dao.beans.TBranch;
 import rtk.docarchive.dao.beans.TDocType;
 import rtk.docarchive.dao.beans.TProduct;
 import rtk.docarchive.dao.beans.TProject;
+import rtk.docarchive.dao.beans.TProjectDoc;
 
 /**
  *
@@ -42,6 +43,9 @@ public class apiREST {
     private static EntityManagerFactory emf;
     private EntityManager em;
 
+    /**
+     *
+     */
     public apiREST() {
         log.info("Constructor");
     }
@@ -54,6 +58,10 @@ public class apiREST {
         return this.em;
     }
 
+    /**
+     *
+     * @return
+     */
     @Path("/test")
     @GET
     @RolesAllowed("doc-archive-user")
@@ -61,14 +69,11 @@ public class apiREST {
         return "test";
     }
 
-    
     //TODO : Функции для работы с проектами
-    
     /**
      * Добавить проект
-     *
-     * @param item
-     * @return
+     * @param item 
+     * @return - объект типа Response
      */
     @Path("/project")
     @PUT
@@ -128,6 +133,7 @@ public class apiREST {
 
     /**
      * Обновить проект
+     *
      * @param id
      * @param item
      * @return
@@ -151,7 +157,7 @@ public class apiREST {
         } catch (Exception e) {
             log.log(Priority.ERROR, e);
         }
-        return Response.status(Response.Status.CREATED).build();
+        return Response.status(Response.Status.OK).build();
     }
 
     /**
@@ -163,8 +169,8 @@ public class apiREST {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("doc-archive-user")
-    public Response getProject() {
-        log.info("getProject");
+    public Response getProjectList() {
+        log.info("getProjectList");
         List<TProject> res = null;
         try {
             getEM();
@@ -217,9 +223,9 @@ public class apiREST {
     }
 
     //TODO : Функции для работы с филиалами
-    
     /**
      * Добавить филиал
+     *
      * @param item
      * @return
      */
@@ -236,7 +242,7 @@ public class apiREST {
             log.info("commit");
             if (em.getTransaction().isActive()) {
                 em.getTransaction().commit();
-            }            
+            }
             em.close();
         } catch (Exception e) {
             log.log(Priority.ERROR, e);
@@ -244,7 +250,7 @@ public class apiREST {
         return Response.status(Response.Status.CREATED).build();
     }
 
-     /**
+    /**
      * Удаление филиала
      *
      * @param id
@@ -284,6 +290,7 @@ public class apiREST {
 
     /**
      * Обновить филиал
+     *
      * @param id
      * @param item
      * @return
@@ -307,18 +314,19 @@ public class apiREST {
         } catch (Exception e) {
             log.log(Priority.ERROR, e);
         }
-        return Response.status(Response.Status.CREATED).build();
+        return Response.status(Response.Status.OK).build();
     }
-    
+
     /**
      * Получить список филиалов
+     *
      * @return
      */
     @Path("/branch")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("doc-archive-user")
-    public Response getBranch() {
+    public Response getBranchList() {
         log.info("getBranch");
         List<TBranch> res = null;
         try {
@@ -341,6 +349,7 @@ public class apiREST {
 
     /**
      * Получить информацию по филиалу с id = {id}
+     *
      * @param id
      * @return
      */
@@ -369,11 +378,11 @@ public class apiREST {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
     }
-    
+
     //TODO : Функции для работы с типами документов (t_doc_type)
-    
     /**
      * Добавить тип документа
+     *
      * @param item
      * @return
      */
@@ -390,7 +399,7 @@ public class apiREST {
             log.info("commit");
             if (em.getTransaction().isActive()) {
                 em.getTransaction().commit();
-            }            
+            }
             em.close();
         } catch (Exception e) {
             log.log(Priority.ERROR, e);
@@ -398,7 +407,7 @@ public class apiREST {
         return Response.status(Response.Status.CREATED).build();
     }
 
-     /**
+    /**
      * Удаление тип документа
      *
      * @param id
@@ -438,6 +447,7 @@ public class apiREST {
 
     /**
      * Обновить тип документа
+     *
      * @param id
      * @param item
      * @return
@@ -461,18 +471,19 @@ public class apiREST {
         } catch (Exception e) {
             log.log(Priority.ERROR, e);
         }
-        return Response.status(Response.Status.CREATED).build();
+        return Response.status(Response.Status.OK).build();
     }
-    
+
     /**
      * Получить список типов документов
+     *
      * @return
      */
     @Path("/doctype")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("doc-archive-user")
-    public Response getDocType() {
+    public Response getDocTypeList() {
         log.info("getDocType");
         List<TDocType> res = null;
         try {
@@ -495,6 +506,7 @@ public class apiREST {
 
     /**
      * Получить информацию по типу документа с id = {id}
+     *
      * @param id
      * @return
      */
@@ -523,11 +535,11 @@ public class apiREST {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
     }
-    
+
     //TODO : Функции для работы с продуктами (t_product)
-    
     /**
      * Добавить продукт
+     *
      * @param item
      * @return
      */
@@ -544,7 +556,7 @@ public class apiREST {
             log.info("commit");
             if (em.getTransaction().isActive()) {
                 em.getTransaction().commit();
-            }            
+            }
             em.close();
         } catch (Exception e) {
             log.log(Priority.ERROR, e);
@@ -552,7 +564,7 @@ public class apiREST {
         return Response.status(Response.Status.CREATED).build();
     }
 
-     /**
+    /**
      * Удаление продукта
      *
      * @param id
@@ -562,7 +574,7 @@ public class apiREST {
     @DELETE
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("doc-archive-user")
-    public Response deleteProвгсе(@PathParam("id") Long id) {
+    public Response deleteProduct(@PathParam("id") Long id) {
         try {
             log.info(String.format("deleteProduct => %s", id.toString()));
             getEM();
@@ -592,6 +604,7 @@ public class apiREST {
 
     /**
      * Обновить тип документа
+     *
      * @param id
      * @param item
      * @return
@@ -615,11 +628,12 @@ public class apiREST {
         } catch (Exception e) {
             log.log(Priority.ERROR, e);
         }
-        return Response.status(Response.Status.CREATED).build();
+        return Response.status(Response.Status.OK).build();
     }
-    
+
     /**
      * Получить список продуктов
+     *
      * @return
      */
     @Path("/product")
@@ -649,6 +663,7 @@ public class apiREST {
 
     /**
      * Получить информацию по типу документа с id = {id}
+     *
      * @param id
      * @return
      */
@@ -677,5 +692,164 @@ public class apiREST {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
     }
-    
+
+    //TODO : Функции для работы с документами проекта (t_project_doc)
+    /**
+     * Добавить документ
+     *
+     * @param item
+     * @return
+     */
+    @Path("/projectdoc")
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed("doc-archive-user")
+    public Response addProjectDoc(TProjectDoc item) {
+        log.info("addProjectDoc => " + item);
+        try {
+            getEM();
+            em.getTransaction().begin();
+            em.merge(item);
+            log.info("commit");
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().commit();
+            }
+            em.close();
+        } catch (Exception e) {
+            log.log(Priority.ERROR, e);
+        }
+        return Response.status(Response.Status.CREATED).build();
+    }
+
+    /**
+     * Удаление документа
+     *
+     * @param id
+     * @return
+     */
+    @Path("/projectdoc/{id}")
+    @DELETE
+    @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed("doc-archive-user")
+    public Response deleteProjectDoc(@PathParam("id") Long id) {
+        try {
+            log.info(String.format("deleteProjectDoc => %s", id.toString()));
+            getEM();
+            TProjectDoc item = em.find(TProjectDoc.class, id);
+            if (item != null) {
+                try {
+                    em.getTransaction().begin();
+                    em.remove(item);
+                    if (em.getTransaction().isActive()) {
+                        em.getTransaction().commit();
+                    }
+                    em.close();
+                    return Response.status(Response.Status.OK).build();
+                } catch (Exception e1) {
+                    em.close();
+                    return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(String.format("delete project_doc id = %s error => %s", id, e1.getMessage())).build();
+                }
+            } else {
+                em.close();
+                return Response.status(Response.Status.NOT_FOUND).build();
+            }
+        } catch (Exception e) {
+            log.log(Priority.ERROR, e);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    /**
+     * Обновить документ
+     *
+     * @param id
+     * @param item
+     * @return
+     */
+    @Path("/projectdoc/{id}")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed("doc-archive-user")
+    public Response updateProjectDoc(@PathParam("id") Long id, TProjectDoc item) {
+        log.info(String.format("updateProjectDoc => %s", id.toString()));
+        try {
+            getEM();
+            em.getTransaction().begin();
+            item.setId(id);
+            em.merge(item);
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().commit();
+            }
+            em.close();
+
+        } catch (Exception e) {
+            log.log(Priority.ERROR, e);
+        }
+        return Response.status(Response.Status.OK).build();
+    }
+
+    /**
+     * Получить список документов по проекту
+     *
+     * @param project_id
+     * @return
+     */
+    @Path("/projectdoc/{project_id}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed("doc-archive-user")
+    public Response getProjectDocList(@PathParam("project_id") Long project_id) {
+        log.info(String.format("getProjectDocList id = > %s", project_id));
+        List<TProjectDoc> res = null;
+        try {
+            getEM();
+            em.getTransaction().begin();
+            Query q = em.createNamedQuery("TProjectDoc.findAll");
+            q.setParameter("project_id", project_id);
+            res = q.getResultList();
+            log.info(String.format("res = %s", res));
+            em.getTransaction().commit();
+            em.close();
+        } catch (Exception e) {
+            log.log(Priority.ERROR, e);
+        }
+
+        if (res != null) {
+            return Response.status(Response.Status.OK).entity(res).build();
+        } else {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+    }
+
+    /**
+     * Получить информацию по типу документа с id = {id}
+     *
+     * @param id
+     * @return
+     */
+    @Path("/product/{id}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed("doc-archive-user")
+    public Response getProjectDocById(@PathParam("id") Long id) {
+        log.info(String.format("getProjectDocById id => %s",id));
+        TProjectDoc res = null;
+        try {
+            getEM();
+            em.getTransaction().begin();
+            Query q = em.createNamedQuery("TProjectDoc.findById");
+            q.setParameter("id", id);
+            res = (TProjectDoc) q.getSingleResult();
+            log.info(String.format("res = %s", res));
+            em.getTransaction().commit();
+            em.close();
+        } catch (Exception e) {
+            log.log(Priority.ERROR, e);
+        }
+        if (res != null) {
+            return Response.status(Response.Status.OK).entity(res).build();
+        } else {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+    }
 }
