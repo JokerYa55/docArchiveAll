@@ -1,0 +1,9 @@
+{
+  "realm": "videomanager",
+  "auth-server-url": "http://192.168.0.20:8080/auth",
+  "ssl-required": "external",
+  "resource": "doc_archive",
+  "credentials": {
+    "secret": "a41ae14d-809d-4ba6-a709-b62c7e8b2463"
+  }
+}
