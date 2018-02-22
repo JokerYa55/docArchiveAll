@@ -7,53 +7,9 @@
         <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
         <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <script src = "/js/api.js"></script>
         <script>
-
-            function getProjectList(token) {
-                console.log("getProductList");
-                $.ajax({
-                    headers: {
-                        'Authorization': 'Bearer ' + token
-                    },
-                    url: "http://192.168.0.20:8080/docArchiveAPI/api/project",
-                    success: function (data, textStatus, jqXHR) {
-                        console.log(jqXHR);
-                        console.log(data);
-                        for (var i = 0; i < data.length; i++) {
-                            console.log(data[i].name_doc);
-                            $('#selectmenu').append('<option value = "' + data[i].id + '">' + data[i].name_doc + "</option>");
-                        }
-                        return data;
-                    },
-                    error: function (jqXHR, textStatus, errorThrown) {
-                        return '';
-                    }
-                });
-            }
-
-            function getBranchList(token, elem) {
-                console.log("getBranchList");
-                $.ajax({
-                    headers: {
-                        'Authorization': 'Bearer ' + token
-                    },
-                    url: "http://192.168.0.20:8080/docArchiveAPI/api/branch",
-                    success: function (data, textStatus, jqXHR) {
-                        console.log(jqXHR);
-                        console.log(data);
-                        for (var i = 0; i < data.length; i++) {
-                            console.log(data[i].name_doc);
-                            $('#' + elem).append('<option value = "' + data[i].id + '">' + data[i].name_branch + "</option>");
-                        }
-                        return data;
-                    },
-                    error: function (jqXHR, textStatus, errorThrown) {
-                        return '';
-                    }
-                });
-            }
-
-
+            
             var keycloak = Keycloak();
             var url;
             keycloak.init({onLoad: 'login-required'}).success(function (authenticated) {
@@ -72,19 +28,6 @@
                     });
 
 
-
-                    /*$.ajax({
-                     headers: {
-                     'Authorization': 'Bearer ' + keycloak.token,
-                     'Order-Num': 123
-                     },
-                     url: "http://192.168.0.20:8080/docArchiveAPI/api/projectdoc/13",
-                     success: function (data, textStatus, jqXHR) {
-                     console.log(data);
-                     }
-                     });*/
-
-                    //alert(JSON.stringify(test, null, "  "));
                 }).error(function () {
                     alert('Failed to load user profile');
                 });
@@ -95,26 +38,6 @@
         </script>
     </head>
     <body>
-        <form action="#">
-            <table>
-                <tr>
-                    <td>
-                        <select id="selectmenu">
-                        </select>
-                    </td>
-                </tr>   
-                <tr>
-                    <td>
-                        <select id="selectmenu1">
-                        </select>
-                    </td></tr>
-                <tr>
-                    <td>
-                        <input type="submit" value="ок"/>
-                    </td>
-                </tr>
-
-            </table>
-        </form>
+        
     </body>
 </html>

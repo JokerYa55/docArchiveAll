@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="/auth/js/keycloak.js"></script>
+        <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <script src = "/js/api.js"></script>
+    </head>
+    <body>
+        <form method="POST" action="http://192.168.0.20:8080/docArchiveWeb/index">
+            <table>
+                <tr>
+                    <td>
+                        <p>Проект</p>
+                    </td>
+                    <td>
+                        <select name="project_id" id="selectmenu">
+                        </select>
+                    </td>
+                </tr>   
+                <tr>
+                    <td>
+                        <p>Филиал</p>
+                    </td>
+                    <td>
+                        <select name="branch_id" id="selectmenu1">
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p>Тип документа</p>
+                    </td>
+                    <td>
+                        <select name="firm_id" id="idDocType">
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <input type="submit" value="ок"/>
+                    </td>
+                </tr>
+
+            </table>
+        </form>
+    </body>
+</html>
