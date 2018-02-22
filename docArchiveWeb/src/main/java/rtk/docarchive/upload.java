@@ -171,14 +171,18 @@ public class upload extends HttpServlet {
         String doctype_name = null;
         try {            
             Map<Long, TBranch> branchMap = (Map) getServletContext().getAttribute("branchHash");
+            log.info("branchMap => " + branchMap);
             Map<Long, TProduct> productMap = (Map) getServletContext().getAttribute("productHash");
+            log.info("productMap => " + productMap);
             Map<Long, TDocType> docTypeMap = (Map) getServletContext().getAttribute("doctypeHash");
-            //log.info("productMap => " + productMap);
-            log.info("docTypeMap => " + docTypeMap);
+            log.info("docTypeMap => " + docTypeMap);                        
             log.info("doctype_id = " + doctype_id);
             branch_name = branchMap.get(new Long(branch_id)).getName_branch();
+            log.info(String.format("branch_name = %s", branch_name));            
+            doctype_name = docTypeMap.get(new Long(doctype_id)).getName_type();            
+            log.info(String.format("doctype_name = %s", doctype_name));
             product_name = productMap.get(new Long(product_id)).getName_product();
-            doctype_name = docTypeMap.get(new Long(doctype_id)).getName_type();
+            log.info(String.format("product_name = %s", product_name));
         } catch (Exception ex1) {
             log.log(Logger.Level.ERROR, ex1);
         }
