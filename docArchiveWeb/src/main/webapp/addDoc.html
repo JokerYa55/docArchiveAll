@@ -13,7 +13,21 @@ and open the template in the editor.
         <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
         <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-        <script src = "/js/api.js"></script>
+        <script src = "/docArchiveWeb/js/api.js"></script>
+        <script>
+            var keycloak = Keycloak();
+            var url;
+            keycloak.init({onLoad: 'login-required'}).success(function (authenticated) {
+
+                $(document).ready(function () {
+                    getProjectList(keycloak.token, "idProjectList");
+                    getBranchList(keycloak.token, "idBranchList");
+                });
+
+            }).error(function () {
+                alert('failed to initialize');
+            });
+        </script>
     </head>
     <body>
         <form method="POST" action="http://192.168.0.20:8080/docArchiveWeb/index">
@@ -23,7 +37,7 @@ and open the template in the editor.
                         <p>Проект</p>
                     </td>
                     <td>
-                        <select name="project_id" id="selectmenu">
+                        <select name="project_id" id="idProjectList">
                         </select>
                     </td>
                 </tr>   
@@ -32,7 +46,7 @@ and open the template in the editor.
                         <p>Филиал</p>
                     </td>
                     <td>
-                        <select name="branch_id" id="selectmenu1">
+                        <select name="branch_id" id="idBranchList">
                         </select>
                     </td>
                 </tr>

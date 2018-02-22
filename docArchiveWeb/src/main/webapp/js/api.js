@@ -5,7 +5,7 @@
  */
 
 
-function getProjectList(token) {
+function getProjectList(token, elem) {
     console.log("getProductList");
     $.ajax({
         headers: {
@@ -17,7 +17,7 @@ function getProjectList(token) {
             console.log(data);
             for (var i = 0; i < data.length; i++) {
                 console.log(data[i].name_doc);
-                $('#selectmenu').append('<option value = "' + data[i].id + '">' + data[i].name_doc + "</option>");
+                $('#' + elem).append('<option value = "' + data[i].id + '">' + data[i].name_doc + "</option>");
             }
             return data;
         },
