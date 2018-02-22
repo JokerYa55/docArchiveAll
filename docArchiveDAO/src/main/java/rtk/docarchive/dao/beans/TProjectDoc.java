@@ -33,7 +33,7 @@ public class TProjectDoc implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)    
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(columnDefinition = "timestamp without time zone NOT NULL DEFAULT now()")
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
@@ -61,31 +61,6 @@ public class TProjectDoc implements Serializable {
      */
     public void setId(Long id) {
         this.id = id;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof TProjectDoc)) {
-            return false;
-        }
-        TProjectDoc other = (TProjectDoc) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "rtk.beans.TProjectDoc[ id=" + id + " ]";
     }
 
     /**
@@ -167,5 +142,29 @@ public class TProjectDoc implements Serializable {
     public void setDoc_type(TDocType doc_type) {
         this.doc_type = doc_type;
     }
-    
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof TProjectDoc)) {
+            return false;
+        }
+        TProjectDoc other = (TProjectDoc) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "rtk.beans.TProjectDoc[ id=" + id + " ]";
+    }
 }

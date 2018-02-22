@@ -6,7 +6,9 @@
 package rtk.docarchive;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -169,17 +171,17 @@ public class upload extends HttpServlet {
         String product_name = null;
         String branch_name = null;
         String doctype_name = null;
-        try {            
+        try {
             Map<Long, TBranch> branchMap = (Map) getServletContext().getAttribute("branchHash");
             log.info("branchMap => " + branchMap);
             Map<Long, TProduct> productMap = (Map) getServletContext().getAttribute("productHash");
             log.info("productMap => " + productMap);
             Map<Long, TDocType> docTypeMap = (Map) getServletContext().getAttribute("doctypeHash");
-            log.info("docTypeMap => " + docTypeMap);                        
+            log.info("docTypeMap => " + docTypeMap);
             log.info("doctype_id = " + doctype_id);
             branch_name = branchMap.get(new Long(branch_id)).getName_branch();
-            log.info(String.format("branch_name = %s", branch_name));            
-            doctype_name = docTypeMap.get(new Long(doctype_id)).getName_type();            
+            log.info(String.format("branch_name = %s", branch_name));
+            doctype_name = docTypeMap.get(new Long(doctype_id)).getName_type();
             log.info(String.format("doctype_name = %s", doctype_name));
             product_name = productMap.get(new Long(product_id)).getName_product();
             log.info(String.format("product_name = %s", product_name));
@@ -217,12 +219,13 @@ public class upload extends HttpServlet {
             TProject proj = em.find(TProject.class, new Long(project_id));
             // Создаем запись для файла
 
-            String f_name = String.format("%s_%s_%s_%s", branch_name, new String(description.getBytes(response.getCharacterEncoding()), "UTF-8"), project_id, product_id);
+            String f_name = String.format("%s_%s_%s_%s", branch_name, doctype_name, product_name, (new String(description.getBytes(response.getCharacterEncoding()), "UTF-8")).replaceAll(" ", "_"));
             TProjectDoc file = new TProjectDoc();
             file.setFile_name(f_name);
             file.setProject(proj);
             file.setReal_file_name(path);
             file.setDate_load(new Date());
+          
             userTransaction.begin();
             em.merge(file);
             userTransaction.commit();
