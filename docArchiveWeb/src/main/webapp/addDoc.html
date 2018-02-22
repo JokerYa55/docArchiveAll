@@ -22,6 +22,8 @@ and open the template in the editor.
                 $(document).ready(function () {
                     getProjectList(keycloak.token, "idProjectList");
                     getBranchList(keycloak.token, "idBranchList");
+                    getDocTypeList(keycloak.token, "idDocType");
+                    getProductList(keycloak.token, "idProduct");
                 });
 
             }).error(function () {
@@ -30,8 +32,16 @@ and open the template in the editor.
         </script>
     </head>
     <body>
-        <form method="POST" action="http://192.168.0.20:8080/docArchiveWeb/index">
+        <form method="POST" action="http://192.168.0.20:8080//docArchiveWeb/upload" enctype="multipart/form-data">
             <table>
+                 <tr>
+                    <td>
+                        <p>Название</p>
+                    </td>
+                    <td>
+                        <input type="text" name="description" value=""/>
+                    </td>
+                </tr>  
                 <tr>
                     <td>
                         <p>Проект</p>
@@ -55,7 +65,24 @@ and open the template in the editor.
                         <p>Тип документа</p>
                     </td>
                     <td>
-                        <select name="firm_id" id="idDocType">
+                        <select name="doc_type_id" id="idDocType">
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p>Файл</p>
+                    </td>
+                    <td>
+                        <input name="data" type="file"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p>Продукт</p>
+                    </td>
+                    <td>
+                        <select name="product_id" id="idProduct">
                         </select>
                     </td>
                 </tr>

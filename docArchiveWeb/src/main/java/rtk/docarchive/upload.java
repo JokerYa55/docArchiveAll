@@ -169,11 +169,10 @@ public class upload extends HttpServlet {
         String product_name = null;
         String branch_name = null;
         String doctype_name = null;
-        try {
-
-            Map<Long, TBranch> branchMap = (Map) request.getSession().getAttribute("branchHash");
-            Map<Long, TProduct> productMap = (Map) request.getSession().getAttribute("productHash");
-            Map<Long, TDocType> docTypeMap = (Map) request.getSession().getAttribute("doctypeHash");
+        try {            
+            Map<Long, TBranch> branchMap = (Map) getServletContext().getAttribute("branchHash");
+            Map<Long, TProduct> productMap = (Map) getServletContext().getAttribute("productHash");
+            Map<Long, TDocType> docTypeMap = (Map) getServletContext().getAttribute("doctypeHash");
             //log.info("productMap => " + productMap);
             log.info("docTypeMap => " + docTypeMap);
             log.info("doctype_id = " + doctype_id);
