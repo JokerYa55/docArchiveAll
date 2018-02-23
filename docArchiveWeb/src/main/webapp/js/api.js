@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-
+// Получить список проектов
 function getProjectList(token, elem) {
     console.log("getProductList");
     $.ajax({
@@ -27,6 +27,7 @@ function getProjectList(token, elem) {
     });
 }
 
+// Получить список филиалов
 function getBranchList(token, elem) {
     console.log("getBranchList");
     $.ajax({
@@ -49,6 +50,7 @@ function getBranchList(token, elem) {
     });
 }
 
+// Получить список типов документов
 function getDocTypeList(token, elem) {
     console.log("getDocTypeList");
     $.ajax({
@@ -71,6 +73,7 @@ function getDocTypeList(token, elem) {
     });
 }
 
+// Получить список продуктов
 function getProductList(token, elem) {
     console.log("getProductList");
     $.ajax({
@@ -91,4 +94,29 @@ function getProductList(token, elem) {
             return '';
         }
     });
+}
+
+// Получить список документов проекта
+function getProjectDocList(token, project_id) {
+    var jqhxr = $.ajax({
+        headers: {
+            'Authorization': 'Bearer ' + token
+        },
+        url: "http://192.168.0.20:8080/docArchiveAPI/api/projectdoc/" + project_id,
+        success: function (data, textStatus, jqXHR) {
+            console.log(jqXHR);
+            console.log(data);
+            for (var i = 0; i < data.length; i++) {
+                console.log(data[i].name_doc);
+                $('#' + elem).append('<option value = "' + data[i].id + '">' + data[i].name_product + "</option>");
+            }
+            return data;
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            return '';
+        }        
+    });
+    
+    jqhxr.a
+    return "";
 }

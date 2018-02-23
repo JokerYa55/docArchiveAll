@@ -3,13 +3,15 @@
     <head>
         <title>Start Page</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.16/datatables.min.css"/>
+        <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.16/datatables.min.js"></script>
         <script src="/auth/js/keycloak.js"></script>
         <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
         <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
         <script src = "/docArchiveWeb/js/api.js"></script>
         <script>
-            
+
             var keycloak = Keycloak();
             var url;
             keycloak.init({onLoad: 'login-required'}).success(function (authenticated) {
@@ -22,7 +24,7 @@
                     console.log(keycloak);
                     url = keycloak.authServerUrl;
 
-                    
+
 
 
                 }).error(function () {
