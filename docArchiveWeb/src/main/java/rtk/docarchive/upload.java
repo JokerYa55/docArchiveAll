@@ -18,6 +18,7 @@ import javax.annotation.Resource;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceUnit;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -162,6 +163,10 @@ public class upload extends HttpServlet {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             return;
         }
+        
+        //RequestDispatcher dispatcher = request.getRequestDispatcher("/index.html");
+        log.info("path => " + request.getContextPath());
+        response.sendRedirect(request.getContextPath()+"/index.html");
     }
 
     private String processUploadedFile(FileItem item, HttpServletRequest request, HttpServletResponse response) throws Exception {
