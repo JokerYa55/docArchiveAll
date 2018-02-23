@@ -225,7 +225,9 @@ public class upload extends HttpServlet {
             file.setProject(proj);
             file.setReal_file_name(path);
             file.setDate_load(new Date());
-          
+            TDocType docType = new TDocType();
+            docType.setId(new Long(doctype_id));
+            file.setDoc_type(docType);
             userTransaction.begin();
             em.merge(file);
             userTransaction.commit();
