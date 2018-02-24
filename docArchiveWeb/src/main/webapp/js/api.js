@@ -112,9 +112,36 @@ function getProjectDocList(token, project_id, elem_id) {
             })
             .always(function (data) {
                 //alert("finished > " + data);
-                var table = $('<table>');
+                var table = $('<table>');                                
                 table.attr('id', 'idDataTable');
+                table.addClass('dataTable');
+                
                 $("#"+elem_id).append(table);
+                
+                var tr = $("<tr>");
+                
+                var th1 = $("<th>");
+                th1.html('<p>id</p>');
+                tr.append(th1);
+                
+                var th2 = $("<th>");
+                th2.html('<p>Имя файла</p>');
+                tr.append(th2);
+                
+                var th3 = $("<th>");
+                th3.html('<p>Тип документа</p>');
+                tr.append(th3);
+                
+                var th4 = $("<th>");
+                th4.html('<p>Имя документа</p>');
+                tr.append(th4);
+                
+                var th5 = $("<th>");
+                th5.html('<p>Продукт</p>');
+                tr.append(th5);
+                
+                table.append(tr);
+                
                 for (var i = 0; i < data.length; i++) {
                     console.log(data[i]);
                     var tr = $('<tr>');
