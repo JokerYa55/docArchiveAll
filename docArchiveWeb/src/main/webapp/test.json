@@ -1,0 +1,10 @@
+{
+    "iTotalRecords": 50,
+    "iTotalDisplayRecords": 10,
+    "sEcho":10,
+    "aaData": [
+        {"name" : "htmlhook.ru","url":"https://htmlhook.ru/","editor":{ "name" : "Блог", "phone":["7", "август"],"email":["sup.blablabla@domain.com"]}},
+        {"name" : "Новый путь","url":"http://www.phppath.ru/","editor": { "name" : "Блог", "phone":["14", "сетябрь"],"email":["blablabla@domain.com"]}},
+        {"name" : "Портал.ua","url":"http://pixelcom.at.ua/","editor":{ "name" : "Магазин", "phone": ["28", "октябрь"],"email" :["blablabla.admin@domain.com"]}}
+        ]
+}
