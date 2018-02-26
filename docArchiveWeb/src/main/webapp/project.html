@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.12/datatables.min.js"></script>        
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">           
+        <script src="http://192.168.0.20:8080/auth/js/keycloak.js"></script>
+    </head>
+    <body>
+        <table id="example"  style="width:100%">
+
+        </table>
+        <script>
+            var keycloak = Keycloak();
+            console.log(keycloak);
+            var url;
+            keycloak.init({onLoad: 'login-required'}).success(function (authenticated) {
+                console.log("init");
+                $(document).ready(function () {
+
+                    var aaData = [
+                        ["htmlhook.ru", "https://htmlhook.ru/", "Блог", "2013-10-15 10:30:00"],
+                        ["Новый путь", "http://www.phppath.ru/", "Блог", "2013-09-15 09:20:00"],
+                        ["Портал UA", "http://pixelcom.at.ua/", "Интернет магазин", "null"],
+                    ];
+
+                    console.log(aaData);
+
+                    var dataT = [];
+                    $.ajax({
+                        headers: {
+                            'Authorization': 'Bearer ' + keycloak.token
+                        },
+                        url: "http://192.168.0.20:8080/docArchiveAPI/api/product",
+                        success: function (data, textStatus, jqXHR) {
+                            console.log(jqXHR);
+                            for (i = 0; i < data.length; i++) {
+                                var temp_arr = [];
+                                console.log(data[i]);
+                                for (key in data[i]) {
+                                    temp_arr.push(data[i][key]);
+                                }
+                                dataT.push(temp_arr);
+                            }
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            return '';
+                        }
+                    }).always(function () {
+                        console.log(dataT);
+                        $("#example").dataTable({
+                            "bServerSide": false,
+                            "aaData": dataT,
+                            columns: [
+                                {title: "id"},
+                                {title: "name"}
+                            ]
+                        });
+                    });
+                });
+            }).error(function () {
+                alert('failed to initialize');
+            });
+        </script>
+    </body>
+</html>
