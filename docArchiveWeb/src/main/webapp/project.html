@@ -19,21 +19,12 @@ and open the template in the editor.
 
         </table>
         <script>
-            var keycloak = Keycloak();
-            console.log(keycloak);
+            var keycloak = Keycloak();            
             var url;
             keycloak.init({onLoad: 'login-required'}).success(function (authenticated) {
                 console.log("init");
                 $(document).ready(function () {
-
-                    var aaData = [
-                        ["htmlhook.ru", "https://htmlhook.ru/", "Блог", "2013-10-15 10:30:00"],
-                        ["Новый путь", "http://www.phppath.ru/", "Блог", "2013-09-15 09:20:00"],
-                        ["Портал UA", "http://pixelcom.at.ua/", "Интернет магазин", "null"],
-                    ];
-
-                    console.log(aaData);
-
+                   
                     var dataT = [];
                     $.ajax({
                         headers: {
@@ -41,10 +32,8 @@ and open the template in the editor.
                         },
                         url: "http://192.168.0.20:8080/docArchiveAPI/api/product",
                         success: function (data, textStatus, jqXHR) {
-                            console.log(jqXHR);
                             for (i = 0; i < data.length; i++) {
                                 var temp_arr = [];
-                                console.log(data[i]);
                                 for (key in data[i]) {
                                     temp_arr.push(data[i][key]);
                                 }
