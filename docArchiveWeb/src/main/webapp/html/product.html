@@ -11,7 +11,7 @@ and open the template in the editor.
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="../css/style.css" rel="stylesheet" type="text/css"/>
         <script src="http://192.168.0.20:8080/auth/js/keycloak.js"></script>
-         <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
         <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.12/datatables.min.js"></script>        
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
         <script>
@@ -54,8 +54,15 @@ and open the template in the editor.
                                 "aaData": dataT,
                                 columns: [
                                     {title: "id"},
-                                    {title: "name"}
-                                ]
+                                    {title: "name"}]
+                            });
+                            $('#example tbody').on('click', 'tr', function () {
+                                if ($(this).hasClass('selected')) {
+                                    $(this).removeClass('selected');
+                                } else {
+                                    table.$('tr.selected').removeClass('selected');
+                                    $(this).addClass('selected');
+                                }
                             });
                         });
                     });
@@ -71,8 +78,13 @@ and open the template in the editor.
         </script>
     </head>
     <body>
-         <table id="example" class="display compact" cellspacing="0" width="100%">
+        <table id="example" class="display compact" cellspacing="0" width="100%">
+            <thead>
 
+            </thead>
+            <tbody>
+
+            </tbody>
         </table>
     </body>
 </html>
