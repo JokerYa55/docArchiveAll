@@ -18,81 +18,97 @@ and open the template in the editor.
         <script src="http://192.168.0.20:8080/auth/js/keycloak.js"></script>
 
         <script>
-            /*var keycloak = Keycloak();
-             var url;
-             keycloak.init({onLoad: 'login-required'}).success(function (authenticated) {
-             
-             //console.log(keycloak.token);
-             
-             keycloak.loadUserProfile().success(function (profile) {
-             //console.log(profile);
-             console.log("token => ");
-             console.log(keycloak);
-             url = keycloak.authServerUrl;
-             
-             $(document).ready(function () {
-             
-             $('#example').DataTable();
-             
-             /*var dataT = [];
-             $.ajax({
-             headers: {
-             'Authorization': 'Bearer ' + keycloak.token
-             },
-             url: "http://192.168.0.20:8080/docArchiveAPI/api/product",
-             success: function (data, textStatus, jqXHR) {
-             for (i = 0; i < data.length; i++) {
-             var temp_arr = [];
-             for (key in data[i]) {
-             temp_arr.push(data[i][key]);
-             }
-             dataT.push(temp_arr);
-             }
-             },
-             error: function (jqXHR, textStatus, errorThrown) {
-             return '';
-             }
-             }).always(function () {
-             console.log(dataT);
-             /*$("#example").dataTable({
-             "bServerSide": false,
-             "language": {"url": "https://cdn.datatables.net/plug-ins/1.10.16/i18n/Russian.json"},
-             "aaData": dataT,
-             "columns": [
-             {title: "id"},
-             {title: "name"}]
-             });*/
+            var keycloak = Keycloak();
+            var url;
+            keycloak.init({onLoad: 'login-required'}).success(function (authenticated) {
 
-            /*var t = new $.fn.dataTable.Api("#example");
-             console.log(t);
-             var table = $("#example").DataTable();
-             
-             $('#example tbody').on('click', 'tr', function () {
-             if ($(this).hasClass('selected')) {
-             $(this).removeClass('selected');
-             } else {
-             table.$('tr.selected').removeClass('selected');
-             $(this).addClass('selected');
-             }
-             });
-             
-             $('#addRow').click(function () {
-             table.row('.selected').remove().draw(false);
-             });
-             });*/
-            /* });
-             
-             
-             }).error(function () {
-             alert('Failed to load user profile');
-             });
-             
-             }).error(function () {
-             alert('failed to initialize');
-             });*/
-            $(document).ready(function () {
-                var table = $('#example').DataTable();
-                console.log(table);
+                //console.log(keycloak.token);
+
+                keycloak.loadUserProfile().success(function (profile) {
+                    //console.log(profile);
+                    console.log("token => ");
+                    console.log(keycloak);
+                    url = keycloak.authServerUrl;
+
+                    $(document).ready(function () {
+                        var table = $('#example').DataTable();
+                        $('#example tbody').on('click', 'tr', function () {
+                            if ($(this).hasClass('selected')) {
+                                $(this).removeClass('selected');
+                            } else {
+                                table.$('tr.selected').removeClass('selected');
+                                $(this).addClass('selected');
+                            }
+                        });
+                        $('#addRow').click(function () {
+                            console.log(table);
+                            table.row('.selected').add().draw(false);
+                        });
+                    });
+
+                });
+                /*$(document).ready(function () {
+                 
+                 $('#example').DataTable();
+                 
+                 /*var dataT = [];
+                 $.ajax({
+                 headers: {
+                 'Authorization': 'Bearer ' + keycloak.token
+                 },
+                 url: "http://192.168.0.20:8080/docArchiveAPI/api/product",
+                 success: function (data, textStatus, jqXHR) {
+                 for (i = 0; i < data.length; i++) {
+                 var temp_arr = [];
+                 for (key in data[i]) {
+                 temp_arr.push(data[i][key]);
+                 }
+                 dataT.push(temp_arr);
+                 }
+                 },
+                 error: function (jqXHR, textStatus, errorThrown) {
+                 return '';
+                 }
+                 }).always(function () {
+                 console.log(dataT);
+                 /*$("#example").dataTable({
+                 "bServerSide": false,
+                 "language": {"url": "https://cdn.datatables.net/plug-ins/1.10.16/i18n/Russian.json"},
+                 "aaData": dataT,
+                 "columns": [
+                 {title: "id"},
+                 {title: "name"}]
+                 });*/
+
+                /*var t = new $.fn.dataTable.Api("#example");
+                 console.log(t);
+                 var table = $("#example").DataTable();
+                 
+                 $('#example tbody').on('click', 'tr', function () {
+                 if ($(this).hasClass('selected')) {
+                 $(this).removeClass('selected');
+                 } else {
+                 table.$('tr.selected').removeClass('selected');
+                 $(this).addClass('selected');
+                 }
+                 });
+                 
+                 $('#addRow').click(function () {
+                 table.row('.selected').remove().draw(false);
+                 });
+                 });*/
+                /* });
+                 
+                 
+                 }).error(function () {
+                 alert('Failed to load user profile');
+                 });
+                 
+                 }).error(function () {
+                 alert('failed to initialize');
+                 });*/
+
+
             });
         </script>
     </head>
