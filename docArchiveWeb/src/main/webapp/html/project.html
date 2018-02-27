@@ -13,24 +13,19 @@ and open the template in the editor.
         <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.12/datatables.min.js"></script>        
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">           
         <script src="http://192.168.0.20:8080/auth/js/keycloak.js"></script>
-    </head>
-    <body>
-        <table id="example"  style="width:100%">
-
-        </table>
         <script>
-            var keycloak = Keycloak();            
+            var keycloak = Keycloak();
             var url;
             keycloak.init({onLoad: 'login-required'}).success(function (authenticated) {
                 console.log("init");
                 $(document).ready(function () {
-                   
+
                     var dataT = [];
                     $.ajax({
                         headers: {
                             'Authorization': 'Bearer ' + keycloak.token
                         },
-                        url: "http://192.168.0.20:8080/docArchiveAPI/api/product",
+                        url: "http://192.168.0.20:8080/docArchiveAPI/api/project",
                         success: function (data, textStatus, jqXHR) {
                             for (i = 0; i < data.length; i++) {
                                 var temp_arr = [];
@@ -45,7 +40,7 @@ and open the template in the editor.
                         }
                     }).always(function () {
                         console.log(dataT);
-                        $("#example").dataTable({
+                        var table = $("#example").dataTable({
                             "bServerSide": false,
                             "aaData": dataT,
                             columns: [
@@ -53,11 +48,27 @@ and open the template in the editor.
                                 {title: "name"}
                             ]
                         });
+
+                        $('#example tbody').on('click', 'tr', function () {
+                            if ($(this).hasClass('selected')) {
+                                $(this).removeClass('selected');
+                            } else {
+                                table.$('tr.selected').removeClass('selected');
+                                $(this).addClass('selected');
+                            }
+                        });
+
                     });
                 });
             }).error(function () {
                 alert('failed to initialize');
             });
         </script>
+    </head>
+    <body>
+                
+        <table id="example"  class="display compact" cellspacing="0" width="100%">
+
+        </table>
     </body>
 </html>

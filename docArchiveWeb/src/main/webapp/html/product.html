@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="../css/style.css" rel="stylesheet" type="text/css"/>
+        <script src="http://192.168.0.20:8080/auth/js/keycloak.js"></script>
+         <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.12/datatables.min.js"></script>        
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
+        <script>
+            var keycloak = Keycloak();
+            var url;
+            keycloak.init({onLoad: 'login-required'}).success(function (authenticated) {
+
+                //console.log(keycloak.token);
+
+                keycloak.loadUserProfile().success(function (profile) {
+                    //console.log(profile);
+                    console.log("token => ");
+                    console.log(keycloak);
+                    url = keycloak.authServerUrl;
+
+                    $(document).ready(function () {
+
+                        var dataT = [];
+                        $.ajax({
+                            headers: {
+                                'Authorization': 'Bearer ' + keycloak.token
+                            },
+                            url: "http://192.168.0.20:8080/docArchiveAPI/api/product",
+                            success: function (data, textStatus, jqXHR) {
+                                for (i = 0; i < data.length; i++) {
+                                    var temp_arr = [];
+                                    for (key in data[i]) {
+                                        temp_arr.push(data[i][key]);
+                                    }
+                                    dataT.push(temp_arr);
+                                }
+                            },
+                            error: function (jqXHR, textStatus, errorThrown) {
+                                return '';
+                            }
+                        }).always(function () {
+                            console.log(dataT);
+                            $("#example").dataTable({
+                                "bServerSide": false,
+                                "aaData": dataT,
+                                columns: [
+                                    {title: "id"},
+                                    {title: "name"}
+                                ]
+                            });
+                        });
+                    });
+
+
+                }).error(function () {
+                    alert('Failed to load user profile');
+                });
+
+            }).error(function () {
+                alert('failed to initialize');
+            });
+        </script>
+    </head>
+    <body>
+         <table id="example" class="display compact" cellspacing="0" width="100%">
+
+        </table>
+    </body>
+</html>
