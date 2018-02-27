@@ -10,10 +10,11 @@ and open the template in the editor.
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="../css/style.css" rel="stylesheet" type="text/css"/>
+        
         <script src="http://192.168.0.20:8080/auth/js/keycloak.js"></script>
         <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-        <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.12/datatables.min.js"></script>        
-        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
+        <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>        
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">        
         <script>
             var keycloak = Keycloak();
             var url;
@@ -49,13 +50,14 @@ and open the template in the editor.
                             }
                         }).always(function () {
                             console.log(dataT);
-                            $("#example").dataTable({
+                            var table = $("#example").dataTable({
                                 "bServerSide": false,
                                 "aaData": dataT,
                                 columns: [
                                     {title: "id"},
                                     {title: "name"}]
                             });
+
                             $('#example tbody').on('click', 'tr', function () {
                                 if ($(this).hasClass('selected')) {
                                     $(this).removeClass('selected');
@@ -63,6 +65,13 @@ and open the template in the editor.
                                     table.$('tr.selected').removeClass('selected');
                                     $(this).addClass('selected');
                                 }
+                            });
+
+                            $('#addRow').on('click', function () {
+                                table.row.add([
+                                    '.1',
+                                    '.2'
+                                ]).draw(false);
                             });
                         });
                     });
@@ -78,6 +87,7 @@ and open the template in the editor.
         </script>
     </head>
     <body>
+        <button id="addRow"> Добавить продукт</button>
         <table id="example" class="display compact" cellspacing="0" width="100%">
             <thead>
 
